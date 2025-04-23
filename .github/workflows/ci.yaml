@@ -11,9 +11,6 @@ on:
       - synchronize
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   workflows:
-    uses: hassio-addons/workflows/.github/workflows/addon-ci.yaml@main
+    uses: stevusprimus/hassio-addons-workflows/.github/workflows/addon-ci.yaml@main
