@@ -1,0 +1,12 @@
+#!/command/with-contenv bashio
+# ==============================================================================
+# Start the example service
+# s6-overlay docs: https://github.com/just-containers/s6-overlay
+# ==============================================================================
+
+bashio::log.info 'Starting CodeProject.AI Server ...'
+
+cd "/app/server" || bashio::exit.nok "Could not change working directory"
+exec dotnet ./CodeProject.AI.Server.dll --ApplicationDataDir="/config/data"
+
+bashio::log.info 'CodeProject.AI Server started'

@@ -1,0 +1,46 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+mkdir -p "/config/runtimes"
+mkdir -p "/config/modules"
+mkdir -p "/config/models"
+mkdir -p "/config/logs"
+
+# Check if the runtimes directory is a symlink, if not create it
+if [ ! -L "/app/runtimes" ]; then
+    bashio::log.info "Creating symlink for runtimes directory"
+    rm -rf "/app/runtimes"
+    ln -s "/config/runtimes" "/app/runtimes"
+fi
+
+# Check if the modules directory is a symlink, if not create it
+if [ ! -L "/app/modules" ]; then
+    bashio::log.info "Creating symlink for modules directory"
+    rm -rf "/app/modules"
+    ln -s "/config/modules" "/app/modules"
+fi
+
+# Check if the models directory is a symlink, if not create it
+if [ ! -L "/app/models" ]; then
+    bashio::log.info "Creating symlink for models directory"
+    rm -rf "/app/models"
+    ln -s "/config/models" "/app/models"
+fi
+
+# Check if the logs directory is a symlink, if not create it
+if [ ! -L "/app/logs" ]; then
+    bashio::log.info "Creating symlink for logs directory"
+    rm -rf "/app/logs"
+    ln -s "/config/logs" "/app/logs"
+fi
+
+# Check if the appsettings.json file is a symlink, if not create it
+if [ ! -L "/app/server/appsettings.json" ]; then  
+    bashio::log.info "Creating symlink for appsettings.json file"
+    cp /app/server/appsettings.json /config/appsettings.json
+    rm /app/server/appsettings.json
+    ln -s /config/appsettings.json /app/server/appsettings.json
+fi
+
+cd /app/server || exit 1
+exec bash ../setup.sh
